@@ -14,6 +14,11 @@ public class UrlController {
     @Autowired
     private UrlService urlService;
 
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello World!";
+    }
+
    
     
 
