@@ -9,5 +9,5 @@ export const shortenUrl = (originalUrl) => {
 };
 
 export const getOriginalUrl = (shortUrl) => {
-    return axios.get(`${API_BASE_URL}/${shortUrl}`);
+    return axios.get(`${API_BASE_URL}/redirect/${shortUrl}`);
 };

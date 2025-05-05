@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.thejas.backend.service.UrlService;
 import org.springframework.web.bind.annotation.GetMapping;
-
-
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api")
@@ -27,8 +27,13 @@ public class UrlController {
         return urlService.shortenUrl(originalUrl);
     }
 
-    @GetMapping("/{shortUrl}")
-    public String getOriginalUrl(@PathVariable String shortUrl) {
-        return urlService.getOriginalUrl(shortUrl);
+    @GetMapping("/redirect/{shortUrl}")
+    public ResponseEntity<String> getOriginalUrl(@PathVariable String shortUrl) {
+        try {
+            String originalUrl = urlService.getOriginalUrl(shortUrl);
+            return ResponseEntity.ok(originalUrl);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("URL not found: " + e.getMessage());
+        }
     }
 }
